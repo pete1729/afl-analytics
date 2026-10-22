@@ -41,6 +41,13 @@ list management and recruitment.
    row it's +2.2 points (CI +0.8 to +3.6). That's real but small (about one
    extra back-to-back goal every three or four games), and it may reflect
    good and bad patches within a match rather than the last goal itself.
+8. **Predicting Port Adelaide home crowds** ([prediction plan](docs/prediction_plan_attendance.md),
+   [notebook](notebooks/09_port_home_attendance.ipynb)): of Port's recent form,
+   the time slot and whether it's a Showdown, only the Showdown clearly helps
+   (+14,445 people). Trained on 2014–2024, the Showdown-only model missed the
+   2025–2026 crowds by 3,923 on average, against 5,798 for predicting the
+   average (1,875 better, 95% CI 648 to 3,535). Most of the remaining error is
+   whole seasons running high or low.
 
 ## Tools
 
