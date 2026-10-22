@@ -97,3 +97,12 @@ after seeing results. No other states, and no school or other pathway attributes
   players beat their pick, not that undrafted country players were missed.
 - Club-level results (e.g. one strong country club) could drive a group result.
   The per-club table will show this.
+
+## Erratum (added after sign-off, before any outcome was compared)
+
+The metro count of **320** above is wrong; the correct figure is **309**. The
+power check joined pathway clubs to picks by DraftGuru URL, which double-counted
+players drafted twice (Ben Jacobs, Mitch Brown, Billy Hartung, Daniel Currie,
+Matthew Spangher, and Simon Buckley, whose second selection was pick 85). The
+group definitions are unchanged. The standard error for the difference rises
+slightly, from about 5.3 to 5.4 games, so power is essentially unchanged.
