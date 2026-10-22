@@ -14,6 +14,11 @@ list management and recruitment.
    is typical for that pick? [Results](notebooks/02_height_age_at_draft.ipynb):
    the pre-registered height test for picks 41–80 was inconclusive; mature-age
    draftees (19+) beat their pick by about 19 games over 8 seasons.
+3. **Mature-age draftees** ([pre-registered hold-out test](docs/preregistration_mature_age_holdout.md),
+   [notebook](notebooks/04_mature_age_draftees.ipynb)): the 2019–2021 hold-out
+   test was inconclusive (only 16 mature-age picks). In 2005–2018, mature-age
+   picks played like juniors taken about 20 places earlier, through both fewer
+   busts and more long careers, with the edge concentrated in 20–22-year-olds.
 
 ## Tools
 
