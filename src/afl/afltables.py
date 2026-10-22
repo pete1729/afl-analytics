@@ -10,7 +10,7 @@ BASE_URL = "https://afltables.com/afl/stats"
 
 
 def season_games(year: int) -> pd.DataFrame:
-    """Return games played by every player in one season, one row per player-team.
+    """Return games and Brownlow votes for every player in one season, one row per player-team.
 
     Uses the season "Player Lists" page, which has one table per team.
     """
@@ -27,13 +27,14 @@ def season_games(year: int) -> pd.DataFrame:
         team = table.columns[0][0].split(" [")[0]
         table.columns = table.columns.get_level_values(1)
 
-        for player_cell, games_cell in zip(table["Player"], table["GM"]):
+        for player_cell, games_cell, votes_cell in zip(table["Player"], table["GM"], table["BR"]):
             # Player rows are (text, link) pairs. The "37 players used" footer
             # spans the whole row, so it arrives as a plain string instead.
             if not isinstance(player_cell, tuple) or player_cell[1] is None:
                 continue
             name, link = player_cell
             games = games_cell[0]
+            votes = votes_cell[0].strip()  # blank means no votes
             surname, first_name = name.split(", ", 1)  # "Dawson, Jordan"
             rows.append({
                 "season": year,
@@ -42,6 +43,7 @@ def season_games(year: int) -> pd.DataFrame:
                 # The player-page URL is AFL Tables' unique ID for a player
                 "afltables_url": f"{BASE_URL}/{link}",
                 "games": int(games),
+                "brownlow_votes": int(votes) if votes else 0,
             })
     return pd.DataFrame(rows)
 
