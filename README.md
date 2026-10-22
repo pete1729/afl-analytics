@@ -15,6 +15,12 @@ list management and recruitment.
    the pre-registered height test for picks 41–80 was inconclusive; mature-age
    draftees (19+) beat their pick by about 19 games over 8 seasons.
 
+## Tools
+
+- **Club draft record** ([notebook](notebooks/03_club_draft_record.ipynb)): set
+  `CLUB` in the first cell to any club to see its picks against the league
+  curve and its rank on the games-vs-expected benchmark.
+
 ## Data sources
 
 All data comes from two excellent community-run sites. Thank you to the people
