@@ -23,6 +23,12 @@ list management and recruitment.
    [notebook](notebooks/05_country_vs_metro.ipynb)): no sign country players are
    overlooked. Once drafted, both groups matched their pick (difference +1.5
    games over 8 seasons, 95% CI −8.4 to +11.4).
+5. **Where the stars come from** ([star-curve definitions](docs/star_curve_definitions.md),
+   [notebook](notebooks/06_where_stars_come_from.ipynb)): 79% of the top 36
+   Brownlow vote-getters (2024–2026) were top-20 national picks, against 17% of
+   all entrants. All-Australians are broader (10% were rookies). The chance of
+   a top-36 season falls from 43% for picks 1–5 to about 15% for picks 6–30,
+   then to under 5%.
 
 ## Tools
 
