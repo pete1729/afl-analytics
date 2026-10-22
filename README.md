@@ -30,9 +30,10 @@ list management and recruitment.
    a top-36 season falls from 43% for picks 1–5 to about 15% for picks 6–30,
    then to under 5%.
 6. **Time on by team** ([notebook](notebooks/07_time_on_by_team.ipynb)): using
-   every 2026 scoring progression, scoring is slightly slower in time on (after
-   the 20-minute mark) and margins shrink, but no team is clearly better or worse
-   in time on than in regular time.
+   every 2025 and 2026 scoring progression (434 matches), scoring is slightly
+   slower in time on (after the 20-minute mark) early in matches, and margins
+   narrow. Teams' time-on edges barely carry over between seasons (correlation
+   0.16); only Essendon and the Western Bulldogs faded in time on in both.
 
 ## Tools
 
