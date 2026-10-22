@@ -19,6 +19,10 @@ list management and recruitment.
    test was inconclusive (only 16 mature-age picks). In 2005–2018, mature-age
    picks played like juniors taken about 20 places earlier, through both fewer
    busts and more long careers, with the edge concentrated in 20–22-year-olds.
+4. **Country vs metro Victorian draftees** ([pre-registered plan](docs/preregistration_country_metro.md),
+   [notebook](notebooks/05_country_vs_metro.ipynb)): no sign country players are
+   overlooked. Once drafted, both groups matched their pick (difference +1.5
+   games over 8 seasons, 95% CI −8.4 to +11.4).
 
 ## Tools
 
