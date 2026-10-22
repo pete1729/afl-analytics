@@ -34,6 +34,13 @@ list management and recruitment.
    slower in time on (after the 20-minute mark) early in matches, and margins
    narrow. Teams' time-on edges barely carry over between seasons (correlation
    0.16); only Essendon and the Western Bulldogs faded in time on in both.
+7. **Goal-kicking momentum** ([pre-registered plan](docs/preregistration_momentum.md),
+   [notebook](notebooks/08_goal_momentum.ipynb)): the team that kicked the last
+   goal kicks the next one 52.7% of the time, against 51.4% if each match's
+   goals came in random order (+1.4 points, 95% CI +0.4 to +2.3). After two in a
+   row it's +2.2 points (CI +0.8 to +3.6). That's real but small (about one
+   extra back-to-back goal every three or four games), and it may reflect
+   good and bad patches within a match rather than the last goal itself.
 
 ## Tools
 
