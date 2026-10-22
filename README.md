@@ -29,6 +29,10 @@ list management and recruitment.
    all entrants. All-Australians are broader (10% were rookies). The chance of
    a top-36 season falls from 43% for picks 1–5 to about 15% for picks 6–30,
    then to under 5%.
+6. **Time on by team** ([notebook](notebooks/07_time_on_by_team.ipynb)): using
+   every 2026 scoring progression, scoring is slightly slower in time on (after
+   the 20-minute mark) and margins shrink, but no team is clearly better or worse
+   in time on than in regular time.
 
 ## Tools
 
