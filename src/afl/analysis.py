@@ -48,6 +48,26 @@ def expected_at_pick(picks: pd.DataFrame, value: str, window: int = 2,
     return expected
 
 
+def add_residuals(data: pd.DataFrame, games_col: str, window: int = 2,
+                  leave_one_out: bool = False) -> pd.DataFrame:
+    """Add outcome columns and their residuals against the expected value at each pick.
+
+    games:         copied from `games_col` (e.g. "games_8")
+    bust:          1 if under 50 games, else 0
+    massive_bust:  1 if under 20 games, else 0
+    expected_<x>, resid_<x> for each of those three
+    """
+    data = data.copy()
+    data["games"] = data[games_col]
+    data["bust"] = (data["games"] < 50).astype(float)
+    data["massive_bust"] = (data["games"] < 20).astype(float)
+    for col in ["games", "bust", "massive_bust"]:
+        data[f"expected_{col}"] = expected_at_pick(data, col, window=window,
+                                                   leave_one_out=leave_one_out)
+        data[f"resid_{col}"] = data[col] - data[f"expected_{col}"]
+    return data
+
+
 def slope(x, y) -> float:
     """Ordinary least squares slope of y on x."""
     return np.polyfit(x, y, 1)[0]

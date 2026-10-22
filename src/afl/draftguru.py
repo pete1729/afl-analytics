@@ -40,8 +40,9 @@ def national_picks(year: int) -> pd.DataFrame:
     table.columns = [col.replace("↧", "").strip() for col in table.columns]
 
     def text(column):
-        # Swap non-breaking spaces (\xa0) for normal spaces
-        return table[column].map(lambda cell: (cell[0] or "").replace("\xa0", " ").strip())
+        # Swap non-breaking spaces (\xa0) for normal spaces, and drop zero-width spaces
+        return table[column].map(
+            lambda cell: (cell[0] or "").replace("\xa0", " ").replace("​", "").strip())
 
     games = text("Games").map(parse_games)
     picks = pd.DataFrame({
@@ -54,9 +55,14 @@ def national_picks(year: int) -> pd.DataFrame:
         "pick_note": text("Pick"),  # e.g. "Priority (Carlton)", "Compensation (...)"
         "signing": text("Signing"),  # e.g. "Academy (Sydney)", "Father-Son (...)"
         "height_cm": pd.to_numeric(text("Height").str.replace("cm", ""), errors="coerce"),
+        # e.g. "Drysdale/Christian College Geelong/Geelong U18": local club, school, U18 club
+        "pathway": text("Original Club"),
         "games_after_draft": games.map(lambda g: g[0]),
         "games_for_drafting_club": games.map(lambda g: g[1]),
     })
+
+    # The last club in the pathway, e.g. "Geelong U18" or a state-league club
+    picks["pathway_club"] = picks["pathway"].str.split("/").str[-1].str.strip()
 
     picks = picks[picks["draft"] == "National"].drop(columns="draft")
     picks["pick"] = picks["pick"].astype(int)
