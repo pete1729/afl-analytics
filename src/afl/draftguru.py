@@ -11,17 +11,21 @@ BASE_URL = "https://www.draftguru.com.au"
 
 
 def parse_games(text: str) -> tuple[int, int] | tuple[None, None]:
-    """Split DraftGuru's games text into (career games, games for drafting club).
+    """Split DraftGuru's games text into (games after draft, games for drafting club).
 
-    "76 (27)" means 76 career games, 27 of them for the drafting club.
-    "218" (no brackets) means every game was for the drafting club.
+    "76 (27)" means 76 games after this draft selection, 27 of them for the
+    drafting club. "218" (no brackets) means every game was for the drafting club.
+
+    Note these are games *after* the selection, not lifetime career games: for a
+    recycled player re-drafted later in their career, earlier games aren't counted.
+    (Checked against AFL Tables: all 898 matched picks agree on this basis.)
     """
     match = re.fullmatch(r"(\d+)(?:\s*\((\d+)\))?", text.strip())
     if match is None:
         return None, None
-    career = int(match.group(1))
-    for_club = int(match.group(2)) if match.group(2) else career
-    return career, for_club
+    after_draft = int(match.group(1))
+    for_club = int(match.group(2)) if match.group(2) else after_draft
+    return after_draft, for_club
 
 
 def national_picks(year: int) -> pd.DataFrame:
@@ -49,7 +53,7 @@ def national_picks(year: int) -> pd.DataFrame:
         "draftguru_url": BASE_URL + table["Player"].map(lambda cell: cell[1] or ""),
         "pick_note": text("Pick"),  # e.g. "Priority (Carlton)", "Compensation (...)"
         "signing": text("Signing"),  # e.g. "Academy (Sydney)", "Father-Son (...)"
-        "career_games": games.map(lambda g: g[0]),
+        "games_after_draft": games.map(lambda g: g[0]),
         "games_for_drafting_club": games.map(lambda g: g[1]),
     })
 
