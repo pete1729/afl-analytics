@@ -28,8 +28,13 @@ def parse_games(text: str) -> tuple[int, int] | tuple[None, None]:
     return after_draft, for_club
 
 
-def national_picks(year: int) -> pd.DataFrame:
-    """Return one row per national draft pick made in `year`."""
+def year_movements(year: int) -> pd.DataFrame:
+    """Every player movement DraftGuru lists for `year`, one row each.
+
+    `draft` says what kind: "National", "Rookie", "Mid-Season", "Pre-Season",
+    "Pre-Draft", "Post-Draft", "Trade" or "Free Agency". For trades and free
+    agency, `club` is the club the player moved to, and `pick` is empty.
+    """
     html = fetch(f"{BASE_URL}/years/{year}")
     if html is None:
         return pd.DataFrame()
@@ -45,7 +50,7 @@ def national_picks(year: int) -> pd.DataFrame:
             lambda cell: (cell[0] or "").replace("\xa0", " ").replace("​", "").strip())
 
     games = text("Games").map(parse_games)
-    picks = pd.DataFrame({
+    moves = pd.DataFrame({
         "draft_year": year,
         "draft": text("Draft"),
         "pick": pd.to_numeric(text("#"), errors="coerce"),
@@ -62,9 +67,16 @@ def national_picks(year: int) -> pd.DataFrame:
     })
 
     # The last club in the pathway, e.g. "Geelong U18" or a state-league club
-    picks["pathway_club"] = picks["pathway"].str.split("/").str[-1].str.strip()
+    moves["pathway_club"] = moves["pathway"].str.split("/").str[-1].str.strip()
+    return moves
 
-    picks = picks[picks["draft"] == "National"].drop(columns="draft")
+
+def national_picks(year: int) -> pd.DataFrame:
+    """Return one row per national draft pick made in `year`."""
+    moves = year_movements(year)
+    if moves.empty:
+        return moves
+    picks = moves[moves["draft"] == "National"].drop(columns="draft")
     picks["pick"] = picks["pick"].astype(int)
     return picks.reset_index(drop=True)
 
