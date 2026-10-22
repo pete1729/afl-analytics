@@ -11,7 +11,9 @@ list management and recruitment.
    performed against that curve?
 2. **Height and age at draft** ([pre-registered plan](docs/preregistration_height_age.md)):
    at the same pick number, do taller or older draftees do better or worse than
-   is typical for that pick?
+   is typical for that pick? [Results](notebooks/02_height_age_at_draft.ipynb):
+   the pre-registered height test for picks 41–80 was inconclusive; mature-age
+   draftees (19+) beat their pick by about 19 games over 8 seasons.
 
 ## Data sources
 
