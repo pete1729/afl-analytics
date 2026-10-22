@@ -2,7 +2,8 @@
 
 Names are compared after normalising (lowercase, no accents or punctuation).
 Nothing is guessed: picks that can't be matched to exactly one player are
-labelled "unmatched" or "ambiguous" so they can be reviewed by hand.
+labelled "unmatched" or "ambiguous" so they can be reviewed by hand. Reviewed
+matches live in data/manual_matches.csv, with the evidence for each.
 """
 
 import difflib
@@ -10,6 +11,11 @@ import re
 import unicodedata
 
 import pandas as pd
+
+from afl.fetch import PROJECT_ROOT
+
+# Hand-reviewed matches for picks the name matcher can't resolve (committed to git)
+MANUAL_MATCHES_PATH = PROJECT_ROOT / "data" / "manual_matches.csv"
 
 # AFL Tables team names -> DraftGuru club names, where they differ
 TEAM_NAMES = {
@@ -27,15 +33,25 @@ def normalise_name(name: str) -> str:
     return " ".join(name.split())
 
 
-def match_picks(picks: pd.DataFrame, seasons: pd.DataFrame) -> pd.DataFrame:
+def load_manual_matches(path=MANUAL_MATCHES_PATH) -> dict[str, str]:
+    """Hand-reviewed matches, as {draftguru_url: afltables_url}."""
+    manual = pd.read_csv(path)
+    return dict(zip(manual["draftguru_url"], manual["afltables_url"]))
+
+
+def match_picks(picks: pd.DataFrame, seasons: pd.DataFrame,
+                manual: dict[str, str] | None = None) -> pd.DataFrame:
     """Add AFL Tables columns to `picks`.
 
     picks:   output of draftguru.national_picks()
     seasons: output of afltables.all_season_games()
+    manual:  optional hand-reviewed matches from load_manual_matches();
+             these take priority over name matching
 
     Adds: match_status, afltables_url, afltables_games (all games in `seasons`)
     and afltables_games_after_draft (games in seasons after the draft year).
     """
+    manual = manual or {}
     seasons = seasons.assign(
         team=seasons["team"].replace(TEAM_NAMES),
         name_key=seasons["player"].map(normalise_name),
@@ -49,6 +65,10 @@ def match_picks(picks: pd.DataFrame, seasons: pd.DataFrame) -> pd.DataFrame:
 
     results = []
     for pick in picks.itertuples():
+        if pick.draftguru_url in manual:
+            results.append({"match_status": "manual", "afltables_url": manual[pick.draftguru_url]})
+            continue
+
         candidates = players[
             (players["name_key"] == normalise_name(pick.player))
             # Drafted in Nov/Dec, so the first possible season is the next year
