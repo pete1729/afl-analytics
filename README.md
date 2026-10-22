@@ -5,7 +5,8 @@ list management and recruitment.
 
 ## Questions
 
-1. **Draft pick value** (in progress): how many AFL games does each national
+1. **Draft pick value** ([notebook](notebooks/01_draft_pick_value.ipynb), exploratory):
+   how many AFL games does each national
    draft pick number typically produce, and how have Port Adelaide's picks
    performed against that curve?
 
