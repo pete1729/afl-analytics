@@ -9,6 +9,9 @@ list management and recruitment.
    how many AFL games does each national
    draft pick number typically produce, and how have Port Adelaide's picks
    performed against that curve?
+2. **Height and age at draft** ([pre-registered plan](docs/preregistration_height_age.md)):
+   at the same pick number, do taller or older draftees do better or worse than
+   is typical for that pick?
 
 ## Data sources
 
