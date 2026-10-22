@@ -10,7 +10,7 @@ are never closed, so pandas.read_html only returns one row. Instead we:
    home event | home time | score | away time | away event,
    with &nbsp; on the side that didn't score.
 
-The final summary rows ("Biggest lead...", "Game time...") are skipped.
+The final summary row ("Biggest lead...", "Game time...") is skipped.
 """
 
 import re
@@ -73,8 +73,10 @@ def scoring_progression(html: str) -> tuple[pd.DataFrame, pd.DataFrame]:
 
         for row in BeautifulSoup(f"<table>{parts[i + 3]}</table>", "lxml").find_all("tr"):
             cells = [td.get_text(" ", strip=True).replace("\xa0", "").strip() for td in row.find_all("td")]
-            if len(cells) != 5 or cells[0].startswith("Biggest lead"):
-                continue  # summary rows at the end of the table
+            # Skip the summary row at the end. "Biggest lead" sits on the side of the
+            # team that held it, so it can be in the first or the fourth cell.
+            if len(cells) != 5 or any(s in " ".join(cells) for s in ("Biggest lead", "Game time")):
+                continue
             home_event, home_time, _score, away_time, away_event = cells
             if home_event:
                 team, opponent, event, time = home, away, home_event, home_time
@@ -91,6 +93,31 @@ def check_match(events: pd.DataFrame, html: str) -> bool:
     """True if each team's summed points equal its final score on the scoreboard."""
     summed = events.groupby("team")["points"].sum()
     return all(summed.get(team, 0) == points for team, points in final_scores(html).items())
+
+
+def match_round(html: str) -> str:
+    """The round label from the top of the page, e.g. '3' or 'Grand Final'."""
+    return re.search(r"Round:\s*(.+?)\s*Venue:", BeautifulSoup(html, "lxml").get_text(" ")).group(1)
+
+
+def season_scoring(year: int) -> tuple[pd.DataFrame, pd.DataFrame]:
+    """Every scoring event and quarter length in a season.
+
+    Returns (events, quarters). Both carry match, round, home and away columns,
+    and `quarters` has a `valid` flag: whether that match's summed points equal
+    the scoreboard's final scores.
+    """
+    all_events, all_quarters = [], []
+    for url in season_match_urls(year):
+        html = fetch(url, encoding="latin-1")
+        if html is None:
+            continue
+        events, quarters = scoring_progression(html)
+        home, away = final_scores(html)
+        info = {"match": url, "round": match_round(html), "home": home, "away": away}
+        all_events.append(events.assign(**info))
+        all_quarters.append(quarters.assign(**info, valid=check_match(events, html)))
+    return pd.concat(all_events, ignore_index=True), pd.concat(all_quarters, ignore_index=True)
 
 
 def season_match_urls(year: int) -> list[str]:
