@@ -53,6 +53,7 @@ def national_picks(year: int) -> pd.DataFrame:
         "draftguru_url": BASE_URL + table["Player"].map(lambda cell: cell[1] or ""),
         "pick_note": text("Pick"),  # e.g. "Priority (Carlton)", "Compensation (...)"
         "signing": text("Signing"),  # e.g. "Academy (Sydney)", "Father-Son (...)"
+        "height_cm": pd.to_numeric(text("Height").str.replace("cm", ""), errors="coerce"),
         "games_after_draft": games.map(lambda g: g[0]),
         "games_for_drafting_club": games.map(lambda g: g[1]),
     })
@@ -60,3 +61,23 @@ def national_picks(year: int) -> pd.DataFrame:
     picks = picks[picks["draft"] == "National"].drop(columns="draft")
     picks["pick"] = picks["pick"].astype(int)
     return picks.reset_index(drop=True)
+
+
+def birth_dates() -> pd.DataFrame:
+    """Date of birth for every player DraftGuru lists, from its 12 birth-month pages.
+
+    Returns columns draftguru_url and dob. The URLs match those from
+    national_picks(), so the two join exactly without name matching.
+    """
+    months = []
+    for month in range(1, 13):
+        html = fetch(f"{BASE_URL}/birth-months/{month}")
+        if html is None:
+            continue
+        table = pd.read_html(StringIO(html), extract_links="body")[0]
+        # The first column is headed "Birth Month" but holds the player's name and link
+        months.append(pd.DataFrame({
+            "draftguru_url": BASE_URL + table["Birth Month"].map(lambda cell: cell[1] or ""),
+            "dob": pd.to_datetime(table["DOB"].map(lambda cell: cell[0]), errors="coerce"),
+        }))
+    return pd.concat(months, ignore_index=True)
