@@ -58,7 +58,8 @@ list management and recruitment.
    unchanged. Adding the opponent's tier helped: big Victorian clubs bring
    about 3,800 more people (95% CI 1,300 to 6,500), and test error fell to
    2,914, the lowest of any model. Wet games (BOM rainfall at Adelaide Airport)
-   drew fewer people, but a wet/dry flag made predictions slightly worse.
+   drew fewer people, but a wet/dry flag (1mm or 4mm) didn't improve
+   cross-validated predictions.
 
 ## Tools
 
