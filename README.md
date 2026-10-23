@@ -61,7 +61,10 @@ list management and recruitment.
    drew fewer people, but a wet/dry flag (1mm or 4mm) didn't improve
    cross-validated predictions. The final model keeps rain anyway, on footy
    logic (−1,734 people on wet days). It misses 2025–2026 crowds by 3,060 on
-   average, against 6,183 for predicting the average.
+   average, against 6,183 for predicting the average. Pooling with Adelaide's
+   home games doubled the data and confirmed the effects, with rain now clear
+   (−1,824, 95% CI −3,301 to −474), but it didn't predict Port's crowds better.
+   Opponent form didn't help either.
 
 ## Tools
 
