@@ -59,7 +59,9 @@ list management and recruitment.
    about 3,800 more people (95% CI 1,300 to 6,500), and test error fell to
    2,914, the lowest of any model. Wet games (BOM rainfall at Adelaide Airport)
    drew fewer people, but a wet/dry flag (1mm or 4mm) didn't improve
-   cross-validated predictions.
+   cross-validated predictions. The final model keeps rain anyway, on footy
+   logic (−1,734 people on wet days). It misses 2025–2026 crowds by 3,060 on
+   average, against 6,183 for predicting the average.
 
 ## Tools
 
