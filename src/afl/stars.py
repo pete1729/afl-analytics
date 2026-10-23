@@ -129,6 +129,28 @@ def entry_routes(urls, movements: pd.DataFrame) -> pd.DataFrame:
     return pd.DataFrame(rows)
 
 
+def all_australian_squad(first_year: int, last_year: int) -> pd.DataFrame:
+    """Every All-Australian squad member for each season, with DraftGuru links.
+
+    The squad is the final team plus the players named in the squad but left
+    out of the team. DraftGuru lists the second group on one page for all years
+    (from 2007, when the squad began), so the squad is that page joined with
+    the team pages. Years before 2007 return the team alone.
+    """
+    html = fetch(f"{BASE_URL}/awards/all-australian-squad")
+    page = pd.read_html(StringIO(html), extract_links="body")[0]
+    left_out = pd.DataFrame({
+        "year": page["Year"].map(lambda c: int(c[0])),
+        "player": page["Player"].map(lambda c: c[0].replace("\xa0", " ")),
+        "draftguru_url": BASE_URL + page["Player"].map(lambda c: c[1] or ""),
+        "in_team": False,
+    })
+    team = pd.concat([all_australian(year) for year in range(first_year, last_year + 1)])
+    team = team[["year", "player", "draftguru_url"]].assign(in_team=True)
+    left_out = left_out[left_out["year"].between(first_year, last_year)]
+    return pd.concat([team, left_out], ignore_index=True)
+
+
 def all_australian(year: int) -> pd.DataFrame:
     """The All-Australian team for `year`, from DraftGuru (positions and player links)."""
     html = fetch(f"{BASE_URL}/awards/all-australian/{year}")
