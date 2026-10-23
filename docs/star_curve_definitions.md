@@ -49,3 +49,23 @@ games curve, which measures the "floor".
 - An 8-season window can miss stars who peak late, especially tall players.
 - Votes depend partly on team quality: stronger teams win more games and so
   collect more votes.
+
+## Addendum: adding All-Australian selection (written before computing it)
+
+Added after the Brownlow-only results were seen. They suggested the Brownlow
+misses key-position players (e.g. pick 1's low star rate alongside many tall
+number-one picks). **No All-Australian-based figure had been computed when this
+was written.**
+
+- **Star season (broad):** a season in which the player is in the top 36 for
+  Brownlow votes **or** is named in that season's **All-Australian team** (the
+  team as published by DraftGuru, 22 or 23 players; not the 40-man squad).
+- **Also reported:** All-Australian selection on its own.
+- **Data:** DraftGuru's All-Australian pages for 2006–2026. They link to the same
+  DraftGuru player URLs as the draft pages, so picks are joined on URL with no
+  name matching. A player drafted twice is counted only for the draft whose
+  8-season window contains the selection.
+- **Everything else is unchanged:** the same population (national picks 1–80,
+  2005–2018), the same 8-season window, at least one star season (main) and two
+  or more (second), the same ±5 curve, bands, bootstrap settings and
+  mature-age comparison. The picks 1–5 table is repeated with the broad definition.
