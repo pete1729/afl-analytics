@@ -55,7 +55,9 @@ list management and recruitment.
    2022, but matched the five-variable model on 2025–2026 (3,129 vs 3,122),
    when crowds didn't drift. Predicting every Showdown at the median training
    Showdown crowd (50,397) improved Showdown errors but left overall error
-   unchanged.
+   unchanged. Adding the opponent's tier helped: big Victorian clubs bring
+   about 3,800 more people (95% CI 1,300 to 6,500), and test error fell to
+   2,914, the lowest of any model.
 
 ## Tools
 
