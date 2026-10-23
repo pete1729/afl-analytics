@@ -26,12 +26,12 @@ list management and recruitment.
 5. **Where the stars come from** ([star-curve definitions](docs/star_curve_definitions.md),
    [notebook](notebooks/06_where_stars_come_from.ipynb)): 79% of the top 36
    Brownlow vote-getters (2024–2026) were top-20 national picks, against 17% of
-   all entrants. All-Australians are broader (10% were rookies). The chance of
-   a top-36 season falls from 43% for picks 1–5 to about 15% for picks 6–30,
-   then to under 5%. Counting All-Australian selection as a star season too
-   lifts every band (46% for picks 1–5, 16–26% for picks 6–30) but keeps the same
-   shape. Tall top-5 picks rarely become stars within 8 seasons, but over whole
-   careers they reach All-Australian about as often as shorter ones, only later.
+   all entrants. All-Australians are broader (10% were rookies). On the most
+   position-balanced star measure (a season in the All-Australian squad), the
+   chance of a star season within 8 seasons falls steadily: 44% for picks 1–5,
+   26% for 6–10, 16% for 21–30 and 6–9% after pick 30. The squad and the
+   Brownlow top 40 overlap by only about half, and Brownlow-based measures
+   exaggerate both the drop after pick 5 and how rare late-pick stars are.
 6. **Time on by team** ([notebook](notebooks/07_time_on_by_team.ipynb)): using
    every 2025 and 2026 scoring progression (434 matches), scoring is slightly
    slower in time on (after the 20-minute mark) early in matches, and margins
