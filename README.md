@@ -28,7 +28,10 @@ list management and recruitment.
    Brownlow vote-getters (2024–2026) were top-20 national picks, against 17% of
    all entrants. All-Australians are broader (10% were rookies). The chance of
    a top-36 season falls from 43% for picks 1–5 to about 15% for picks 6–30,
-   then to under 5%.
+   then to under 5%. Counting All-Australian selection as a star season too
+   lifts every band (46% for picks 1–5, 16–26% for picks 6–30) but keeps the same
+   shape. Tall top-5 picks rarely become stars within 8 seasons, but over whole
+   careers they reach All-Australian about as often as shorter ones, only later.
 6. **Time on by team** ([notebook](notebooks/07_time_on_by_team.ipynb)): using
    every 2025 and 2026 scoring progression (434 matches), scoring is slightly
    slower in time on (after the 20-minute mark) early in matches, and margins
