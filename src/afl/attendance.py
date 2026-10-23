@@ -98,3 +98,14 @@ def recent_form(matches: pd.DataFrame, team: str, n: int = 10) -> pd.Series:
     # shift(1) so each game only sees results from before it
     form = 100 * result.rolling(n).mean().shift(1)
     return form.reindex(matches.index)
+
+
+def both_teams_form(matches: pd.DataFrame, n: int = 10) -> pd.DataFrame:
+    """recent_form() for both teams in every match: columns home_form and away_form."""
+    out = pd.DataFrame(index=matches.index, columns=["home_form", "away_form"], dtype=float)
+    for team in pd.unique(matches[["home", "away"]].to_numpy().ravel()):
+        form = recent_form(matches, team, n)
+        for side in ("home", "away"):
+            rows = matches[side] == team
+            out.loc[rows, f"{side}_form"] = form[rows]
+    return out
