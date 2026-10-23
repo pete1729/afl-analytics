@@ -46,8 +46,10 @@ list management and recruitment.
    the time slot and whether it's a Showdown, only the Showdown clearly helps
    (+14,445 people). Trained on 2014–2024, the Showdown-only model missed the
    2025–2026 crowds by 3,923 on average, against 5,798 for predicting the
-   average (1,875 better, 95% CI 648 to 3,535). Most of the remaining error is
-   whole seasons running high or low.
+   average (1,875 better, 95% CI 648 to 3,535). An exploratory regression adding
+   day, night (6pm+), Gather Round and form did best (test error 3,122), but
+   apart from the Showdown each effect is small and uncertain. Most of the
+   remaining error is whole seasons running high or low.
 
 ## Tools
 
