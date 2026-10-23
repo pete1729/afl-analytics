@@ -53,7 +53,9 @@ list management and recruitment.
    that also tracks recent crowds and early-season interest cut
    cross-validated error by about a quarter (5,111 to 3,916), and halved it in
    2022, but matched the five-variable model on 2025–2026 (3,129 vs 3,122),
-   when crowds didn't drift.
+   when crowds didn't drift. Predicting every Showdown at the median training
+   Showdown crowd (50,397) improved Showdown errors but left overall error
+   unchanged.
 
 ## Tools
 
