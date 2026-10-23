@@ -57,7 +57,8 @@ list management and recruitment.
    Showdown crowd (50,397) improved Showdown errors but left overall error
    unchanged. Adding the opponent's tier helped: big Victorian clubs bring
    about 3,800 more people (95% CI 1,300 to 6,500), and test error fell to
-   2,914, the lowest of any model.
+   2,914, the lowest of any model. Wet games (BOM rainfall at Adelaide Airport)
+   drew fewer people, but a wet/dry flag made predictions slightly worse.
 
 ## Tools
 
