@@ -69,3 +69,25 @@ was written.**
   2005–2018), the same 8-season window, at least one star season (main) and two
   or more (second), the same ±5 curve, bands, bootstrap settings and
   mature-age comparison. The picks 1–5 table is repeated with the broad definition.
+
+## Addendum 2: Brownlow top 40 and the All-Australian squad (written before computing them)
+
+Suggested because the 40-man All-Australian squad is probably the most accurate
+public list of each season's top players, and the Brownlow top 40 is a similar
+size. **No figure using either had been computed when this was written.**
+
+- **Squad star season:** a season in which the player was in that season's
+  **All-Australian squad**. That's the final team (DraftGuru's team pages) plus
+  the squad members left out of it (DraftGuru's squad page).
+  - The squad was 40 players a year in 2007–2021, 44 in 2022–2025 and 46 in 2026.
+  - There was no squad in 2006, so that season uses the team alone. It only
+    affects the 2005 draftees' first season.
+- **Brownlow top-40 season:** a season in the top 40 for Brownlow votes, ties at
+  40th included.
+- **Either:** a season meeting at least one of the two.
+- **Headline measure: the squad**, as the more accurate list. The other two are
+  reported alongside it, together with how much the squad and the Brownlow
+  top 40 overlap each season.
+- **Everything else is unchanged:** national picks 1–80, 2005–2018, the first 8
+  seasons, 1+ star season (main) and 2+ (second), the ±5 curve, the bands,
+  picks 1–5 by pick and by height, and the mature-age comparison.
