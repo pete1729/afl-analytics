@@ -49,7 +49,11 @@ list management and recruitment.
    average (1,875 better, 95% CI 648 to 3,535). An exploratory regression adding
    day, night (6pm+), Gather Round and form did best (test error 3,122), but
    apart from the Showdown each effect is small and uncertain. Most of the
-   remaining error is whole seasons running high or low.
+   remaining error is whole seasons running high or low. A next-game version
+   that also tracks recent crowds and early-season interest cut
+   cross-validated error by about a quarter (5,111 to 3,916), and halved it in
+   2022, but matched the five-variable model on 2025–2026 (3,129 vs 3,122),
+   when crowds didn't drift.
 
 ## Tools
 
