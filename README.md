@@ -3,6 +3,12 @@
 Exploratory AFL analytics in Python, with a focus on questions relevant to
 list management and recruitment.
 
+Where a question is a real test rather than exploration, the plan (hypothesis,
+outcome, sample and decision rule) is written and committed in `docs/` before
+any result is computed. Changes made after seeing results are labelled as
+addenda, and mistakes found later are corrected openly as errata. Null and
+inconclusive results are reported alongside the positive ones.
+
 ## Questions
 
 1. **Draft pick value** ([notebook](notebooks/01_draft_pick_value.ipynb), exploratory):
@@ -45,29 +51,19 @@ list management and recruitment.
    extra back-to-back goal every three or four games), and it may reflect
    good and bad patches within a match rather than the last goal itself.
 8. **Predicting Port Adelaide home crowds** ([prediction plan](docs/prediction_plan_attendance.md),
-   [notebook](notebooks/09_port_home_attendance.ipynb)): of Port's recent form,
-   the time slot and whether it's a Showdown, only the Showdown clearly helps
-   (+14,445 people). Trained on 2014–2024, the Showdown-only model missed the
-   2025–2026 crowds by 3,923 on average, against 5,798 for predicting the
-   average (1,875 better, 95% CI 648 to 3,535). An exploratory regression adding
-   day, night (6pm+), Gather Round and form did best (test error 3,122), but
-   apart from the Showdown each effect is small and uncertain. Most of the
-   remaining error is whole seasons running high or low. A next-game version
-   that also tracks recent crowds and early-season interest cut
-   cross-validated error by about a quarter (5,111 to 3,916), and halved it in
-   2022, but matched the five-variable model on 2025–2026 (3,129 vs 3,122),
-   when crowds didn't drift. Predicting every Showdown at the median training
-   Showdown crowd (50,397) improved Showdown errors but left overall error
-   unchanged. Adding the opponent's tier helped: big Victorian clubs bring
-   about 3,800 more people (95% CI 1,300 to 6,500), and test error fell to
-   2,914, the lowest of any model. Wet games (BOM rainfall at Adelaide Airport)
-   drew fewer people, but a wet/dry flag (1mm or 4mm) didn't improve
-   cross-validated predictions. The final model keeps rain anyway, on footy
-   logic (−1,734 people on wet days). It misses 2025–2026 crowds by 3,060 on
-   average, against 6,183 for predicting the average. Pooling with Adelaide's
-   home games doubled the data and confirmed the effects, with rain now clear
-   (−1,824, 95% CI −3,301 to −474), but it didn't predict Port's crowds better.
-   Opponent form didn't help either.
+   [notebook](notebooks/09_port_home_attendance.ipynb)): a Showdown is by far
+   the biggest effect (+14,445 people), and big Victorian opponents add about
+   3,800 (95% CI 1,300 to 6,500). Wet days cost about 1,700. Trained on
+   2014–2024, the final model misses 2025–2026 crowds by about 3,060 on
+   average, against 6,183 for just predicting the average. Most of the
+   remaining error is whole seasons running high or low. The notebook also
+   covers the variants tried along the way (time slots, form, recent crowds,
+   pooling with Adelaide's home games).
+9. **Is pick 1 worth picks 7 and 12?** ([notebook](notebooks/10_pick_1_vs_7_and_12.ipynb)):
+   the price of matching a pick-1 academy bid. On the star curve (All-Australian
+   squad or Brownlow top 40 within 8 seasons), pick 1 gives about a 49% chance of
+   a star, against 42% for pick 7 and 35% for pick 12. Taking both later picks
+   gives a 62% chance of at least one star, if the two are independent.
 
 ## Tools
 
@@ -77,15 +73,20 @@ list management and recruitment.
 
 ## Data sources
 
-All data comes from two excellent community-run sites. Thank you to the people
-who build and maintain them.
+Almost all data comes from two excellent community-run sites. Thank you to the
+people who build and maintain them.
 
-- **[AFL Tables](https://afltables.com/)**: match results, player match
+- **[AFL Tables](https://afltables.com/)**: match results, crowds, player match
   statistics, scoring progressions and career records.
 - **[DraftGuru](https://www.draftguru.com.au/)**: AFL draft history, including
-  pick numbers, clubs and draft types.
+  pick numbers, clubs, draft types and All-Australian selections.
+- **[Bureau of Meteorology](http://www.bom.gov.au/climate/data/)** (notebook 09
+  only): daily rainfall at Adelaide Airport. BOM blocks scripted downloads, so
+  download the zip by hand (Climate Data Online → Rainfall → Daily, station
+  023034, "All years of data") into `data/raw/bom/`.
 
-Both are small hobby sites, so the scraper here is deliberately polite:
+AFL Tables and DraftGuru are small hobby sites, so the scraper here is
+deliberately polite:
 
 - Every page is cached in `data/raw/` and never downloaded twice.
 - Requests are made one at a time, with a 1–2 second pause between them.
@@ -100,6 +101,7 @@ the code will rebuild them.
 ```
 src/afl/          reusable code (fetching, parsing)
 notebooks/        exploratory analysis
+docs/             pre-registered plans and definitions
 data/raw/         cached HTML pages (gitignored)
 data/processed/   cleaned CSV/parquet outputs (gitignored)
 ```
@@ -111,3 +113,18 @@ python3 -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
 ```
+
+## Running the notebooks
+
+The notebooks are committed with their outputs, so you can read them on GitHub
+without running anything. To run them yourself, start Jupyter from the repo's
+root folder with the virtual environment active:
+
+```bash
+source .venv/bin/activate
+jupyter lab
+```
+
+A first run downloads every page it needs (a few thousand in total across all
+notebooks), one at a time with a pause between each, so expect it to take a
+while. Later runs read from the cache in `data/raw/` and are fast.
