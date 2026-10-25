@@ -64,6 +64,13 @@ inconclusive results are reported alongside the positive ones.
    squad or Brownlow top 40 within 8 seasons), pick 1 gives about a 49% chance of
    a star, against 42% for pick 7 and 35% for pick 12. Taking both later picks
    gives a 62% chance of at least one star, if the two are independent.
+10. **Slow-starting top-20 picks** ([notebook](notebooks/11_slow_starting_top_picks.ipynb),
+    exploratory): prompted by Port trading for Luke Pedlar (pick 11 in 2020,
+    39 games in 5 injury-hit seasons). Of top-20 picks with under 50 games in
+    their first 5 seasons, 4% ever had a star season (All-Australian squad or
+    Brownlow top 40), against 57% of those with 50 or more. Three of the four
+    who did were key-position talls. The best mid-sized careers were useful
+    120–200-game players rather than stars.
 
 ## Tools
 
