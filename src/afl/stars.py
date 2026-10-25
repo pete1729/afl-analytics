@@ -50,6 +50,44 @@ def top_per_club(seasons: pd.DataFrame, first: int, last: int, n: int = 2) -> pd
     return by_club[by_club["rank"] <= n].sort_values(["club", "rank"]).reset_index(drop=True)
 
 
+def brownlow_top(seasons: pd.DataFrame, n: int, first: int = 2006, last: int = 2026) -> pd.DataFrame:
+    """(season, afltables_url) for every player in the top `n` for Brownlow votes that season.
+
+    Ties at the cutoff are all included.
+    """
+    votes = seasons[seasons["season"].between(first, last)].groupby(["season", "afltables_url"])[
+        "brownlow_votes"].sum().reset_index()
+    votes["rank"] = votes.groupby("season")["brownlow_votes"].rank(ascending=False, method="min")
+    return votes.loc[votes["rank"] <= n, ["season", "afltables_url"]]
+
+
+def star_season_counts(picks: pd.DataFrame, seasons: pd.DataFrame, squad: pd.DataFrame,
+                       years: int | None = 8) -> pd.DataFrame:
+    """Star seasons for each pick, under each definition in docs/star_curve_definitions.md.
+
+    `picks` needs draft_year, afltables_url and draftguru_url (as from draft_outcomes()).
+    Counts seasons draft_year+1 to draft_year+`years`, or every season after the
+    draft if `years` is None. Returns one row per pick (same index) with columns
+    squad, brownlow36, brownlow40 and either40 (squad or Brownlow top 40).
+    """
+    keys = picks[["draft_year", "afltables_url", "draftguru_url"]].reset_index()
+    squad_seasons = squad[["draftguru_url", "year"]].rename(columns={"year": "season"})
+    hits = {
+        "squad": keys.merge(squad_seasons, on="draftguru_url"),
+        "brownlow36": keys.merge(brownlow_top(seasons, 36), on="afltables_url"),
+        "brownlow40": keys.merge(brownlow_top(seasons, 40), on="afltables_url"),
+    }
+    hits["either40"] = pd.concat([hits["squad"], hits["brownlow40"]])
+    counts = {}
+    for name, h in hits.items():
+        later = h["season"] > h["draft_year"]
+        if years is not None:
+            later &= h["season"] <= h["draft_year"] + years
+        counts[name] = (h[later].drop_duplicates(["index", "season"]).groupby("index").size()
+                        .reindex(picks.index, fill_value=0))
+    return pd.DataFrame(counts)
+
+
 def all_movements(first_year: int, last_year: int) -> pd.DataFrame:
     """year_movements() for every year, stacked, with the year as a column."""
     years = [year_movements(year).assign(year=year) for year in range(first_year, last_year + 1)]
